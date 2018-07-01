@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 RED='\033[0;31m'
 BLUE='\e[34mBlue'
@@ -25,8 +24,8 @@ function pystart() {
 
             printf "${CLEAR_LINE}🐞 ${NO_COLOR} Debug mode?\n"
             
-            read answer
-            if [[ "$answer" =~  "[yY]" ]] ;then
+            read user_response
+            if [[ "$user_response" =~  "[yY]" ]] ;then
 
                 printf "Setting up flask debugging...\n"
                 export FLASK_DEBUG=1   
@@ -51,13 +50,13 @@ function pystart() {
 
         printf "${CLEAR_LINE} ${BLUE} Would you like to create a new pipenv?\n"
 
-        read answer
-        if [[ "$answer" =~  "[yY]" ]] ;then
+        read user_response
+        if [[ "$user_response" =~  "[yY]" ]] ;then
 
             printf "Let's do it!\n 🥈 or 🥉?\n"
 
-            read answer
-            if [[ answer =~ "three|3" ]] ;then
+            read user_response
+            if [[ user_response =~ "three|3" ]] ;then
             
                 printf "${CLEAR_LINE}🐍 ${NO_COLOR} Creating python3 pipenv...\n"
                 pipenv --three

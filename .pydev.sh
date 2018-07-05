@@ -1,8 +1,8 @@
 #!/bin/bash
 
 RED='\033[0;31m'
-BLUE='\e[34mBlue'
-GRAY='\e[90mDark'
+BLUE='\e[34m'
+GRAY='\e[90m'
 NO_COLOR='\033[0m'
 CLEAR_LINE='\r\033[K'
 
@@ -16,8 +16,8 @@ function pystart() {
     if [ -f "Pipfile" ] ;then
 
         printf "${CLEAR_LINE}🐍 ${NO_COLOR} Activating pipenv...\n"
-        pipenv shell
-        printf "${CLEAR_LINE}✔️ ${GRAY} Done!\n"
+        pipenv shell --bare
+        printf "${CLEAR_LINE}👌 ${GRAY} Done!\n"
 
         # developing a flask app?
         if grep "flask" Pipfile --quiet ;then
@@ -29,7 +29,7 @@ function pystart() {
 
                 printf "Setting up flask debugging...\n"
                 export FLASK_DEBUG=1   
-                printf "${CLEAR_LINE}✔️ ${GRAY} Done!\n" 
+                printf "${CLEAR_LINE}👌 ${GRAY} Done!\n" 
 
             else 
 
@@ -55,32 +55,33 @@ function pystart() {
 
             printf "Let's do it!\n 🥈 or 🥉?\n"
 
+            REGEX='(three)|3'
             read user_response
-            if [[ user_response =~ "three|3" ]] ;then
+            if [[ "$user_response" =~ $REGEX ]] ;then
             
                 printf "${CLEAR_LINE}🐍 ${NO_COLOR} Creating python3 pipenv...\n"
                 pipenv --three
-                printf "${CLEAR_LINE}✔️ ${GRAY} Done!\n" 
+                printf "${CLEAR_LINE}👌 ${GRAY} Done!\n" 
 
                 printf "${CLEAR_LINE}🐍 ${NO_COLOR} Activating pipenv...\n"
                 pipenv shell
-                printf "${CLEAR_LINE}✔️ ${GRAY} Done!\n"
+                printf "${CLEAR_LINE}👌 ${GRAY} Done!\n"
 
             else 
             
                 printf "${CLEAR_LINE}🐍 ${NO_COLOR} Creating python2 pipenv...\n"
-                pipenv --two
-                printf "${CLEAR_LINE}✔️ ${GRAY} Done!\n" 
+                pipenv --two 
+                printf "${CLEAR_LINE}👌 ${GRAY} Done!\n" 
 
                 printf "${CLEAR_LINE}🐍 ${NO_COLOR} Activating pipenv...\n"
                 pipenv shell
-                printf "${CLEAR_LINE}✔️ ${GRAY} Done!\n"
+                printf "${CLEAR_LINE}👌 ${GRAY} Done!\n"
 
             fi
 
         else
 
-            printf "${CLEAR_LINE} ${BLUE} There's nothing for us to do then bye. 🙆‍♂️\n"
+            printf "${CLEAR_LINE} ${BLUE} There's nothing for us to do then bye. 🙆‍👌\n"
         
         fi
     
@@ -88,17 +89,19 @@ function pystart() {
 }
 
 
-# to destroy the env and un-python the directory
+# to shut down the env
 function pystop() {
     
     printf "${CLEAR_LINE}🐍 ${NO_COLOR} Dectivating pipenv...\n"
     deactivate #TODO: check if this works``
-    printf "${CLEAR_LINE}✔️ ${GRAY} Done!\n"
+    printf "${CLEAR_LINE}👌 ${GRAY} Done!\n"
     
 }
 
 
 # to destroy the env and un-python the directory
 function pysmash() {
-
+    printf "${CLEAR_LINE}💥 ${NO_COLOR} Destroying pipenv...\n"
+    pipenv --rm --bare
+    rm -f Pipfile Pipfile.lock 
 }

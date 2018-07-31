@@ -16,18 +16,18 @@ function pystart() {
     if [ -f "Pipfile" ] ;then
 
         printf "${CLEAR_LINE}🐍 ${NO_COLOR} Activating pipenv...\n"
-        pipenv shell --bare
+        pipenv shell
         printf "${CLEAR_LINE}👌 ${GRAY} Done!\n"
 
         # developing a flask app?
         if grep "flask" Pipfile --quiet ;then
 
+            printf "${CLEAR_LINE}🐞 ${NO_COLOR} I see this is a flask app...\n"
             printf "${CLEAR_LINE}🐞 ${NO_COLOR} Debug mode?\n"
-            
             read user_response
             if [[ "$user_response" =~  "[yY]" ]] ;then
 
-                printf "Setting up flask debugging...\n"
+                prgintf "Setting up flask debugging...\n"
                 export FLASK_DEBUG=1   
                 printf "${CLEAR_LINE}👌 ${GRAY} Done!\n" 
 
@@ -38,7 +38,19 @@ function pystart() {
 
             fi          
 
-            # TODO: prompt to pick a .py file as FLASK_APP
+            printf "${CLEAR_LINE}🐞 ${NO_COLOR} What would you like to set as FLASK_APP?\n"
+            printf "${CLEAR_LINE}🐞 ${NO_COLOR} (Specify a filename or say [n]o to skip this.)"
+            read user_response
+            if [[ "$user_response" =~  "[nN]" ]] ;then
+
+                printf "${CLEAR_LINE}🐞 ${NO_COLOR} Okay okay that's chill\n"
+            
+            else
+
+                printf "${CLEAR_LINE}🐞 ${NO_COLOR} Setting ${user_response} to FLASK_APP...\n"
+                export FLASK_APP=$user_response
+
+            fi
 
         else
 
@@ -101,7 +113,9 @@ function pystop() {
 
 # to destroy the env and un-python the directory
 function pysmash() {
+
     printf "${CLEAR_LINE}💥 ${NO_COLOR} Destroying pipenv...\n"
     pipenv --rm --bare
     rm -f Pipfile Pipfile.lock 
+
 }

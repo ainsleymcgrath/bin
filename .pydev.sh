@@ -27,7 +27,7 @@ function pystart() {
             read user_response
             if [[ "$user_response" =~  "[yY]" ]] ;then
 
-                prgintf "Setting up flask debugging...\n"
+                printf "Setting up flask debugging...\n"
                 export FLASK_DEBUG=1   
                 printf "${CLEAR_LINE}👌 ${GRAY} Done!\n" 
 
@@ -105,7 +105,7 @@ function pystart() {
 function pystop() {
     
     printf "${CLEAR_LINE}🐍 ${NO_COLOR} Dectivating pipenv...\n"
-    deactivate #TODO: check if this works``
+    exit
     printf "${CLEAR_LINE}👌 ${GRAY} Done!\n"
     
 }
